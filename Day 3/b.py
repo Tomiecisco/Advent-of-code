@@ -27,10 +27,11 @@ def grab_full_number(cell, row):
 
     return (int(''.join(number)))
 def searcher():
-    numbers = []
+    total = 0
     for i, j in enumerate(eng_sche):
         for k, l in enumerate(j):
-            if l != '.' and not l.isdigit():
+            if l == '*':
+                numbers = []
                 if find_adj_u(i,k).isdigit():
                     numbers.append(grab_full_number(k, i - 1))   
                     
@@ -53,9 +54,16 @@ def searcher():
                     numbers.append(grab_full_number(k-1, i))
                 if find_adj_r(i,k).isdigit():
                     numbers.append(grab_full_number(k+1, i))
+                
+                if len(numbers) != 2:
+                     total+= 0
+
+                else:
+                    total += numbers[0] * numbers[1]
+
    
         
-    return numbers
+    return total
                 
 
 def find_adj_l(i, k):
@@ -113,7 +121,7 @@ def main():
     with open("Day 3\input.txt", 'r') as reader:
        for line in reader.readlines():
            eng_sche.append(list(line.strip()))
-    print(sum(searcher()))
+    print(searcher())
        
 
 if __name__ == "__main__":
